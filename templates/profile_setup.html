@@ -1,0 +1,109 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Complete Profile</title>
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+</head>
+
+<body>
+
+<div class="main profile-box">
+
+    <div class="profile-title"> Complete Your Profile </div>
+
+    {% if messages %}
+        <div class="messages-local">
+            {% for message in messages %}
+                <p class="msg {{ message.tags }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form method="POST" action="{% url 'complete_profile' %}">
+        {% csrf_token %}
+
+        
+        <input type="text" name="first_name" placeholder="First Name" required>
+        <input type="text" name="last_name" placeholder="Last Name" required>
+
+        <div class="phone-container">
+            <select name="country_code" id="countryCodeSelect" required>
+                <option value="">Select Country Code</option>
+            </select>
+            <input type="text" name="phone" placeholder="Phone Number" required>
+        </div>
+
+      
+        <select id="countrySelect" name="country" required>
+            <option value="">Select Country</option>
+        </select>
+
+        <select id="citySelect" name="city" required>
+            <option value="">Select City</option>
+        </select>
+
+        <button type="submit">Save</button>
+    </form>
+
+</div>
+
+<script>
+
+const countrySelect = document.getElementById("countrySelect");
+const citySelect = document.getElementById("citySelect");
+const countryCodeSelect = document.getElementById("countryCodeSelect");
+
+
+let countriesData = {};
+fetch("{% static 'js/countries.json' %}")
+.then(res => res.json())
+.then(data => {
+    countriesData = data;
+    
+    Object.keys(countriesData).forEach(country => {
+        const option = document.createElement("option");
+        option.value = country;
+        option.textContent = country;
+        countrySelect.appendChild(option);
+    });
+});
+
+let phoneCodesData = [];
+fetch("{% static 'js/countryPhoneCodes.json' %}")
+.then(res => res.json())
+.then(data => {
+    phoneCodesData = data;
+    phoneCodesData.forEach(item => {
+        const option = document.createElement("option");
+        option.value = item.code;
+        option.textContent = `${item.country} (+${item.code})`;
+        countryCodeSelect.appendChild(option);
+    });
+});
+
+
+countrySelect.addEventListener("change", function() {
+    const selectedCountry = this.value;
+    citySelect.innerHTML = "<option value=''>Select City</option>";
+
+    if(countriesData[selectedCountry]) {
+        countriesData[selectedCountry].forEach(city => {
+            const opt = document.createElement("option");
+            opt.value = city;
+            opt.textContent = city;
+            citySelect.appendChild(opt);
+        });
+    }
+
+    
+    const codeObj = phoneCodesData.find(c => c.country === selectedCountry);
+    if(codeObj) {
+        countryCodeSelect.value = codeObj.code;
+    }
+});
+</script>
+
+</body>
+</html>

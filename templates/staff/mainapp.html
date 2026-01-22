@@ -1,0 +1,198 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block title %}إدارة التطبيق الرئيسي{% endblock %}
+
+{% block content %}
+<div class="main-app-container">
+    <div class="page-header">
+        <h1>📱 إدارة التطبيق الرئيسي</h1>
+        <p>قم بتحديث التطبيق الرئيسي للمنصة الذي سيظهر للمستخدمين.</p>
+    </div>
+
+    <div class="content-wrapper">
+        <form method="POST" enctype="multipart/form-data" class="app-form">
+            {% csrf_token %}
+
+            <div class="form-card">
+                <div class="card-header">
+                    <h3>بيانات التطبيق</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>عنوان التطبيق</label>
+                        {{ form.title }}
+                    </div>
+
+                    <div class="form-group">
+                        <label>الوصف</label>
+                        {{ form.description }}
+                    </div>
+
+                    <div class="form-group file-group">
+                        <label>ملف التطبيق (APK)</label>
+                        {{ form.apk_file }}
+                        {% if form.instance.apk_file %}
+                        <div class="current-file">
+                            الملف الحالي: <a href="{{ form.instance.apk_file.url }}">{{ form.instance.apk_file.name
+                                }}</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn-save">💾 حفظ التحديثات</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .main-app-container {
+        padding: 20px;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .page-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 15px;
+    }
+
+    .page-header h1 {
+        color: #1e293b;
+        margin-bottom: 5px;
+    }
+
+    .page-header p {
+        color: #64748b;
+    }
+
+    .content-wrapper {
+        display: block;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .form-card,
+    .preview-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e2e8f0;
+        overflow: hidden;
+    }
+
+    .card-header,
+    .preview-card h3 {
+        background: #f8fafc;
+        padding: 15px 20px;
+        border-bottom: 1px solid #e2e8f0;
+        margin: 0;
+        color: #334155;
+        font-size: 1.1rem;
+    }
+
+    .preview-card h3 {
+        padding: 15px 20px;
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    .card-footer {
+        background: #f8fafc;
+        padding: 15px 25px;
+        text-align: right;
+        border-top: 1px solid #e2e8f0;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #475569;
+        font-weight: 500;
+    }
+
+    .form-control,
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+    }
+
+    textarea {
+        height: 100px;
+        resize: vertical;
+    }
+
+    .btn-save {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 10px 25px;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .btn-save:hover {
+        background: #1d4ed8;
+    }
+
+    /* Preview Mockup */
+    .preview-box {
+        padding: 30px;
+        text-align: center;
+    }
+
+    .app-icon-placeholder {
+        width: 60px;
+        height: 60px;
+        background: #3b82f6;
+        color: white;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin: 0 auto 15px;
+    }
+
+    .preview-box h4 {
+        margin: 10px 0;
+        color: #1e293b;
+    }
+
+    .preview-box p {
+        color: #64748b;
+        font-size: 0.9em;
+        margin-bottom: 20px;
+    }
+
+    .btn-mock {
+        background: #10b981;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 20px;
+        opacity: 0.8;
+        cursor: default;
+    }
+
+    .current-file {
+        margin-top: 5px;
+        font-size: 0.85em;
+        color: #64748b;
+    }
+</style>
+{% endblock %}

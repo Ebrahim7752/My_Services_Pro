@@ -1,0 +1,1188 @@
+/* ======================
+   Root & Reset
+====================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Tajawal', system-ui, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #f4f7fb, #eef2f7);
+    color: #333;
+    min-height: 100vh;
+}
+
+/* ======================
+   Navbar
+====================== */
+.navbar {
+    height: 70px;
+    background: linear-gradient(135deg, #068BEA, #0aa2f0);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 28px;
+    color: #fff;
+    box-shadow: 0 6px 20px rgba(0,0,0,.15);
+    animation: slideDown .6s ease;
+}
+
+.navbar-brand span {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.navbar-brand small {
+    display: block;
+    font-size: 12px;
+    opacity: .85;
+}
+
+.navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.welcome {
+    font-size: 14px;
+    opacity: .95;
+}
+
+.btn-logout {
+    background: rgba(255,255,255,.18);
+    padding: 8px 16px;
+    border-radius: 10px;
+    color: #fff;
+    text-decoration: none;
+    transition: all .3s ease;
+}
+
+.btn-logout:hover {
+    background: #ff6b6b;
+    transform: translateY(-2px);
+}
+
+/* ======================
+   Layout
+====================== */
+.main-container {
+    display: flex;
+    min-height: calc(100vh - 70px);
+}
+
+/* ======================
+   Sidebar
+====================== */
+.sidebar {
+    width: 260px;
+    background: #ffffff;
+    box-shadow: 6px 0 18px rgba(0,0,0,.08);
+    padding: 30px 20px;
+    animation: slideRight .6s ease;
+}
+
+.sidebar-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.nav-item {
+    padding: 14px 18px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: all .35s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-item::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #068BEA, #0aa2f0);
+    opacity: 0;
+    z-index: -1;
+    transition: opacity .35s ease;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    color: #fff;
+    transform: translateX(-6px);
+}
+
+.nav-item:hover::before,
+.nav-item.active::before {
+    opacity: 1;
+}
+
+/* ======================
+   Content
+====================== */
+.content {
+    flex: 1;
+    padding: 32px;
+    animation: fadeIn .7s ease;
+}
+
+/* ======================
+   Animations
+====================== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+    from { transform: translateY(-100%); }
+    to   { transform: translateY(0); }
+}
+
+@keyframes slideRight {
+    from { transform: translateX(100px); opacity: 0; }
+    to   { transform: translateX(0); opacity: 1; }
+}
+
+/* ======================
+   Responsive
+====================== */
+@media (max-width: 900px) {
+    .sidebar {
+        width: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .sidebar-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .content {
+        padding: 20px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   Stats Page (Overrides)
+========================= */
+
+.page-header {
+    margin-bottom: 30px;
+    animation: fadeIn .6s ease;
+}
+
+.page-header h1 {
+    font-size: 26px;
+    font-weight: bold;
+    color: #068BEA;
+    margin-bottom: 6px;
+}
+
+.page-header p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* ===== Grid ===== */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 24px;
+}
+
+/* ===== Card ===== */
+.stat-card {
+    background: #ffffff;
+    padding: 26px;
+    border-radius: 18px;
+    text-align: center;
+    box-shadow: 0 12px 26px rgba(0,0,0,.10);
+    position: relative;
+    overflow: hidden;
+    transition: all .35s ease;
+    animation: slideUp .6s ease;
+}
+
+/* Gradient border effect */
+.stat-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #068BEA, #0aa2f0);
+    opacity: .08;
+    z-index: 0;
+}
+
+.stat-card * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Hover */
+.stat-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 18px 40px rgba(0,0,0,.18);
+}
+
+/* Icon */
+.stat-icon {
+    font-size: 42px;
+    margin-bottom: 12px;
+}
+
+/* Title */
+.stat-card h3 {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+/* Number */
+.stat-number {
+    font-size: 34px;
+    font-weight: bold;
+    color: #068BEA;
+}
+
+/* ===== Color Variants ===== */
+.stat-card.users .stat-number {
+    color: #068BEA;
+}
+
+.stat-card.apps .stat-number {
+    color: #28a745;
+}
+
+.stat-card.downloads .stat-number {
+    color: #ff8c00;
+}
+
+/* =========================
+   Animations
+========================= */
+@keyframes slideUp {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   Apps Page (قائمة التطبيقات)
+========================= */
+
+/* Container */
+.content .apps-page {
+    animation: fadeIn .6s ease;
+}
+
+/* Page Header */
+.content .apps-page .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 26px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.content .apps-page .page-header h1 {
+    font-size: 26px;
+    color: #068BEA;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+.content .apps-page .page-header p {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Primary Button */
+.content .apps-page .btn-primary {
+    background: linear-gradient(135deg, #068BEA, #0aa2f0);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all .3s ease;
+    box-shadow: 0 8px 18px rgba(0,0,0,.15);
+}
+
+.content .apps-page .btn-primary:hover {
+    transform: translateY(-3px) scale(1.05);
+    background: linear-gradient(135deg, #fd8917, #ff9f3c);
+}
+
+/* Table Card */
+.content .apps-page .table-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 12px 26px rgba(0,0,0,.12);
+    animation: slideUp .6s ease;
+}
+
+/* Table Styles */
+.content .apps-page .apps-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.content .apps-page .apps-table thead {
+    background: #f4f7fb;
+}
+
+.content .apps-page .apps-table th {
+    padding: 14px;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+}
+
+.content .apps-page .apps-table td {
+    padding: 14px;
+    text-align: center;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+}
+
+/* Hover Row */
+.content .apps-page .apps-table tbody tr {
+    transition: background .3s ease, transform .3s ease;
+}
+
+.content .apps-page .apps-table tbody tr:hover {
+    background: #f9fcff;
+    transform: scale(1.01);
+}
+
+/* Icon */
+.content .apps-page .app-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 6px 12px rgba(0,0,0,.12);
+}
+
+.content .apps-page .no-icon {
+    color: #aaa;
+}
+
+/* Title & Description */
+.content .apps-page .app-title {
+    font-weight: bold;
+    color: #333;
+}
+
+.content .apps-page .app-desc {
+    color: #666;
+    max-width: 260px;
+    margin: auto;
+}
+
+/* Date */
+.content .apps-page .app-date {
+    font-size: 13px;
+    color: #777;
+}
+
+/* Actions Buttons */
+.content .apps-page .actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.content .apps-page .btn-edit,
+.content .apps-page .btn-delete {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all .3s ease;
+}
+
+/* Edit Button */
+.content .apps-page .btn-edit {
+    background: rgba(6,139,234,.1);
+    color: #068BEA;
+}
+
+.content .apps-page .btn-edit:hover {
+    background: #068BEA;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,139,234,.25);
+}
+
+/* Delete Button */
+.content .apps-page .btn-delete {
+    background: rgba(255,0,0,.08);
+    color: #d9534f;
+}
+
+.content .apps-page .btn-delete:hover {
+    background: #d9534f;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(217,83,79,.25);
+}
+
+/* Empty Row */
+.content .apps-page .empty-row {
+    padding: 30px;
+    color: #888;
+    font-style: italic;
+}
+
+/* Animations */
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .content .apps-page .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .content .apps-page .apps-table th,
+    .content .apps-page .apps-table td {
+        font-size: 13px;
+        padding: 10px;
+    }
+
+    .content .apps-page .app-desc {
+        max-width: 160px;
+    }
+}
+
+@media (max-width: 576px) {
+    .content .apps-page .apps-table thead {
+        display: none;
+    }
+
+    .content .apps-page .apps-table,
+    .content .apps-page .apps-table tbody,
+    .content .apps-page .apps-table tr,
+    .content .apps-page .apps-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .content .apps-page .apps-table tr {
+        margin-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .content .apps-page .apps-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    .content .apps-page .apps-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        top: 14px;
+        font-weight: bold;
+        color: #555;
+    }
+
+    .content .apps-page .actions {
+        justify-content: flex-end;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   Users Page
+========================= */
+.users-page .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.users-page .page-header h1 {
+    font-size: 24px;
+    color: #068BEA;
+    margin: 0;
+}
+
+.users-page .page-header p {
+    font-size: 14px;
+    color: #555;
+    margin: 2px 0 0 0;
+}
+
+.users-page .btn-primary {
+    background: linear-gradient(135deg, #068BEA, #0aa2f0);
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all .35s ease;
+}
+
+.users-page .btn-primary:hover {
+    transform: translateY(-2px) scale(1.05);
+    background: linear-gradient(135deg, #fd8917, #ff9f3c);
+    box-shadow: 0 6px 14px rgba(0,0,0,.15);
+}
+
+/* Table Card */
+.users-page .table-card {
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 8px 22px rgba(0,0,0,.12);
+    padding: 20px;
+    overflow-x: auto;
+    animation: fadeIn .6s ease;
+}
+
+/* Users Table */
+.users-page table.users-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.users-page table.users-table th,
+.users-page table.users-table td {
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 14px;
+    color: #333;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.users-page table.users-table th {
+    background-color: #f5f5f5;
+    color: #068BEA;
+    font-weight: bold;
+}
+
+.users-page table.users-table tbody tr:hover {
+    background-color: #f0f8ff;
+    transform: translateY(-1px);
+}
+
+/* Action Buttons */
+.users-page .actions a.btn-edit,
+.users-page .actions a.btn-delete {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all .3s ease;
+}
+
+.users-page .actions a.btn-edit {
+    background: #ffd966;
+    color: #333;
+}
+
+.users-page .actions a.btn-edit:hover {
+    background: #ffb347;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+.users-page .actions a.btn-delete {
+    background: #f8d7da;
+    color: #d9534f;
+}
+
+.users-page .actions a.btn-delete:hover {
+    background: #d9534f;
+    color: #fff;
+    transform: scale(1.05);
+}
+
+/* Empty row */
+.users-page .empty-row {
+    text-align: center;
+    color: #999;
+    padding: 20px 0;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .users-page .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .users-page table.users-table th,
+    .users-page table.users-table td {
+        font-size: 13px;
+        padding: 10px 8px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* =========================
+   Create User Page
+========================= */
+.create-user-page {
+    animation: fadeIn .6s ease;
+    max-width: 600px;
+    margin: 20px auto;
+    font-family: Tahoma, sans-serif;
+}
+
+.create-user-page h3 {
+    text-align: center;
+    color: #068BEA;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.create-user-page .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,.12);
+    animation: slideUp .6s ease;
+}
+
+.create-user-page label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #333;
+}
+
+.create-user-page input,
+.create-user-page select {
+    width: 100%;
+    padding: 10px 12px;
+    margin-top: 6px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: all .3s ease;
+}
+
+.create-user-page input:focus,
+.create-user-page select:focus {
+    border-color: #068BEA;
+    box-shadow: 0 4px 12px rgba(6,139,234,.2);
+    outline: none;
+}
+
+.create-user-page .btn-save {
+    width: 100%;
+    padding: 12px 0;
+    background: linear-gradient(135deg, #068BEA, #0aa2f0);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all .35s ease;
+}
+
+.create-user-page .btn-save:hover {
+    transform: translateY(-3px) scale(1.05);
+    background: linear-gradient(135deg, #fd8917, #ff9f3c);
+    box-shadow: 0 8px 18px rgba(0,0,0,.15);
+}
+
+.create-user-page .msg {
+    text-align: center;
+    color: green;
+    margin-top: 12px;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .create-user-page .card {
+        padding: 18px 15px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+.create-user-page .btn-delete {
+    width: 100%;
+    padding: 12px 0;
+    background: #f8d7da;
+    color: #d9534f;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all .35s ease;
+}
+
+.create-user-page .btn-delete:hover {
+    background: #d9534f;
+    color: #fff;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 18px rgba(0,0,0,.15);
+}
+
+
+
+
+
+
+
+
+.create-user-page {
+    max-width: 500px;
+    margin: 30px auto;
+    font-family: Tahoma, sans-serif;
+}
+
+.create-user-page h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #068BEA;
+}
+
+.create-user-page .card {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.create-user-page .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.create-user-page label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333;
+}
+
+.create-user-page input,
+.create-user-page select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 6px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+}
+
+.create-user-page .btn-save {
+    width: 100%;
+    padding: 12px 0;
+    background: linear-gradient(135deg, #068BEA, #0aa2f0);
+    color: #fff;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: all .35s ease;
+}
+
+.create-user-page .btn-save:hover {
+    background: linear-gradient(135deg, #fd8917, #ff9f3c);
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.create-user-page .btn-delete {
+    width: 100%;
+    padding: 12px 0;
+    background: #f8d7da;
+    color: #d9534f;
+    font-weight: bold;
+    border: none;
+    border-radius: 12px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all .35s ease;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+}
+
+.create-user-page .btn-delete:hover {
+    background: #d9534f;
+    color: #fff;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.create-user-page .msg {
+    color: green;
+    text-align: center;
+    margin-top: 12px;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+#messages-container {
+    position: relative;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+.alert {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #fff;
+    background: #4caf50; /* أخضر للنجاح */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    animation: fadein 0.3s ease;
+}
+
+/* إذا أردت أنواع أخرى من الرسائل مثل خطأ */
+.alert.error {
+    background: #f44336; /* أحمر */
+}
+
+@keyframes fadein {
+    from {opacity:0; transform: translateY(-10px);}
+    to {opacity:1; transform: translateY(0);}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== صفحة إضافة التطبيقات ===== */
+.create-app-page {
+    max-width: 480px;
+    margin: 30px auto;
+    font-family: Tahoma, sans-serif;
+}
+
+.create-app-page h3 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #068BEA;
+}
+
+.card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+.card label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+    color: #555;
+}
+
+.card input,
+.card textarea,
+.card select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 4px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* الأزرار */
+.form-actions {
+    text-align: center;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #068BEA, #0aa2f0);
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-save:hover {
+    background: linear-gradient(135deg, #0fd1f5, #068BEA);
+    transform: scale(1.05);
+}
+
+/* رسائل الخطأ */
+.alert.error {
+    background: #f44336;
+    color: #fff;
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ===== عام ===== */
+body {
+    font-family: Tahoma, sans-serif;
+    background-color: #f5f7fa;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.admin-page {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 0 15px;
+}
+
+/* ===== العناوين ===== */
+.admin-page h2 {
+    text-align: center;
+    color: #068BEA;
+    margin-bottom: 25px;
+}
+
+.admin-page h3 {
+    margin-bottom: 15px;
+    color: #0a73c4;
+}
+
+/* ===== البطاقات ===== */
+.card {
+    background: #fff;
+    padding: 20px 25px;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.stats-card {
+    overflow-x: auto;
+}
+
+/* ===== الجداول ===== */
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th,
+table td {
+    padding: 12px 15px;
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+table thead {
+    background: linear-gradient(135deg, #068BEA, #0aa2f0);
+    color: #fff;
+}
+
+table tbody tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+table tbody tr:hover {
+    background: #e6f2ff;
+}
+
+/* ===== الرسائل ===== */
+#messages-container {
+    margin-bottom: 20px;
+}
+
+.alert {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #fff;
+    background: #4caf50; /* أخضر للنجاح */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    animation: fadein 0.3s ease;
+    margin-bottom: 12px;
+}
+
+.alert.error {
+    background: #f44336; /* أحمر */
+}
+
+@keyframes fadein {
+    from {opacity:0; transform: translateY(-10px);}
+    to {opacity:1; transform: translateY(0);}
+}

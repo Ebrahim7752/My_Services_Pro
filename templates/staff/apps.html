@@ -1,0 +1,292 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+
+{% block title %}قائمة التطبيقات{% endblock %}
+
+{% block extra_css %}
+<style>
+
+.content .apps-page {
+    animation: fadeIn .6s ease;
+}
+.content .apps-page .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 26px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.content .apps-page .page-header h1 {
+    font-size: 26px;
+    color: #068BEA;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+.content .apps-page .page-header p {
+    font-size: 14px;
+    color: #666;
+}
+.content .apps-page .btn-primary {
+    background: linear-gradient(135deg, #068BEA, #0aa2f0);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all .3s ease;
+    box-shadow: 0 8px 18px rgba(0,0,0,.15);
+}
+.content .apps-page .btn-primary:hover {
+    transform: translateY(-3px) scale(1.05);
+    background: linear-gradient(135deg, #fd8917, #ff9f3c);
+}
+.content .apps-page .table-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 12px 26px rgba(0,0,0,.12);
+    animation: slideUp .6s ease;
+}
+.content .apps-page .apps-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+.content .apps-page .apps-table thead {
+    background: #f4f7fb;
+}
+.content .apps-page .apps-table th {
+    padding: 14px;
+    font-size: 14px;
+    color: #555;
+    text-align: center;
+}
+.content .apps-page .apps-table td {
+    padding: 14px;
+    text-align: center;
+    border-top: 1px solid #eee;
+    font-size: 14px;
+}
+.content .apps-page .apps-table tbody tr {
+    transition: background .3s ease, transform .3s ease;
+}
+.content .apps-page .apps-table tbody tr:hover {
+    background: #f9fcff;
+    transform: scale(1.01);
+}
+.content .apps-page .app-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    object-fit: cover;
+    box-shadow: 0 6px 12px rgba(0,0,0,.12);
+}
+.content .apps-page .no-icon {
+    color: #aaa;
+}
+.content .apps-page .app-title {
+    font-weight: bold;
+    color: #333;
+}
+.content .apps-page .app-desc {
+    color: #666;
+    max-width: 260px;
+    margin: auto;
+}
+.content .apps-page .app-date {
+    font-size: 13px;
+    color: #777;
+}
+.content .apps-page .actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+.content .apps-page .btn-edit,
+.content .apps-page .btn-delete {
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: all .3s ease;
+}
+.content .apps-page .btn-edit {
+    background: rgba(6,139,234,.1);
+    color: #068BEA;
+}
+.content .apps-page .btn-edit:hover {
+    background: #068BEA;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,139,234,.25);
+}
+.content .apps-page .btn-delete {
+    background: rgba(255,0,0,.08);
+    color: #d9534f;
+}
+.content .apps-page .btn-delete:hover {
+    background: #d9534f;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(217,83,79,.25);
+}
+.content .apps-page .empty-row {
+    padding: 30px;
+    color: #888;
+    font-style: italic;
+}
+/* الرسائل */
+.alert.success {
+    background: #068BEA;
+    color: #fff;
+    padding: 12px 18px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+}
+/* Animations */
+@keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0); opacity: 1; }
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 900px) {
+    .content .apps-page .page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    .content .apps-page .apps-table th,
+    .content .apps-page .apps-table td {
+        font-size: 13px;
+        padding: 10px;
+    }
+    .content .apps-page .app-desc {
+        max-width: 160px;
+    }
+}
+@media (max-width: 576px) {
+    .content .apps-page .apps-table thead {
+        display: none;
+    }
+    .content .apps-page .apps-table,
+    .content .apps-page .apps-table tbody,
+    .content .apps-page .apps-table tr,
+    .content .apps-page .apps-table td {
+        display: block;
+        width: 100%;
+    }
+    .content .apps-page .apps-table tr {
+        margin-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+    }
+    .content .apps-page .apps-table td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+    .content .apps-page .apps-table td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        top: 14px;
+        font-weight: bold;
+        color: #555;
+    }
+    .content .apps-page .actions {
+        justify-content: flex-end;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="apps-page">
+
+    <!-- ===== Page Header ===== -->
+    <div class="page-header">
+        <div class="page-title">
+            <h1>📱 قائمة التطبيقات</h1>
+            <p>إدارة جميع التطبيقات المضافة في النظام</p>
+
+            <!-- رسائل النجاح -->
+            {% if messages %}
+            <div id="messages-container">
+                {% for message in messages %}
+                    {% if "success" in message.tags %}
+                    <div class="alert success">{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <a href="{% url 'create_app' %}" class="btn-primary">
+            ➕ إضافة تطبيق جديد
+        </a>
+    </div>
+
+    <!-- ===== Table Card ===== -->
+    <div class="card table-card">
+        <table class="apps-table">
+            <thead>
+                <tr>
+                    <th>الأيقونة</th>
+                    <th>العنوان</th>
+                    <th>الوصف</th>
+                    <th>تاريخ الإضافة</th>
+                    <th>أفعال</th>
+                </tr>
+            </thead>
+
+            <tbody>
+            {% for app in apps %}
+                <tr>
+                    <td>
+                        {% if app.icon %}
+                            <img src="{{ app.icon.url }}" alt="{{ app.title }}" class="app-icon">
+                        {% else %}
+                            <span class="no-icon">—</span>
+                        {% endif %}
+                    </td>
+                    <td class="app-title">{{ app.title }}</td>
+                    <td class="app-desc">{{ app.description|truncatechars:50 }}</td>
+                    <td class="app-date">{{ app.created_at|date:"Y-m-d H:i" }}</td>
+                    <td class="actions">
+                        <a href="{% url 'edit_app' app.id %}" class="btn-edit">تعديل</a>
+                        <a href="{% url 'delete_app' app.id %}" class="btn-delete"
+                           onclick="return confirm('هل أنت متأكد من حذف التطبيق؟');">حذف</a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="empty-row">لا توجد تطبيقات بعد</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- ===== JS لإخفاء رسائل النجاح بعد 5 ثواني ===== -->
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+    const messages = document.getElementById("messages-container");
+    if(messages){
+        setTimeout(() => {
+            messages.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+            messages.style.opacity = 0;
+            messages.style.transform = "translateY(-10px)";
+        }, 5000); // 5 ثواني
+    }
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}لوحة التحكم{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/admin_style.css' %}">
+</head>
+<body>
+
+<!-- Navbar -->
+<header class="navbar">
+    <div class="navbar-brand">
+        <span>MyServicesPro</span>
+        <small>Admin Panel</small>
+    </div>
+
+    <div class="navbar-menu">
+        <span class="welcome">مرحبًا، {{ user.username }}</span>
+        <a href="{% url 'logout' %}" class="btn-logout">تسجيل خروج</a>
+    </div>
+</header>
+
+<!-- Layout -->
+<div class="main-container">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <a href="{% url 'staff_dashboard' %}" class="nav-item active">لوحة التحكم</a>
+            <a href="{% url 'staff_users' %}" class="nav-item">المستخدمون</a>
+            <a href="{% url 'staff_apps' %}" class="nav-item">التطبيقات</a>
+            <a href="{% url 'staff_mainapp' %}" class="nav-item">التطبيق الرئيسي</a>
+        </nav>
+    </aside>
+
+    <!-- Content -->
+    <main class="content">
+        {% block content %}{% endblock %}
+    </main>
+
+</div>
+
+</body>
+</html>

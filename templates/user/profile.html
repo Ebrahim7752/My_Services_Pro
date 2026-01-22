@@ -1,0 +1,369 @@
+{% extends 'base_user.html' %}
+{% load static %}
+{% block title %}الملف الشخصي{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <div class="page-header">
+        <h1>👤 الملف الشخصي</h1>
+        <p>قم وتحديث معلوماتك الشخصية وإدارة أمان حسابك.</p>
+    </div>
+
+    {% if messages %}
+    <div class="msg-container">
+        {% for message in messages %}
+        <div class="msg {{ message.tags }}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST" class="profile-form">
+        {% csrf_token %}
+
+        <div class="form-grid">
+            <!-- بطاقة البيانات الشخصية -->
+            <div class="form-card">
+                <div class="card-header">
+                    <h3>📝 البيانات الشخصية</h3>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>اسم المستخدم (لا يمكن تعديله)</label>
+                        {{ user_form.username }}
+                    </div>
+                    <div class="form-group">
+                        <label>البريد الإلكتروني</label>
+                        {{ user_form.email }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- بطاقة المعلومات التفصيلية -->
+            <div class="form-card">
+                <div class="card-header">
+                    <h3>📍 معلومات الاتصال والموقع</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-half">
+                            <label>الاسم الأول</label>
+                            {{ profile_form.first_name }}
+                        </div>
+                        <div class="form-group col-half">
+                            <label>الاسم الأخير</label>
+                            {{ profile_form.last_name }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>الدولة</label>
+                        <select name="country" id="country" required class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>المدينة</label>
+                        <select name="city" id="city" required class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>رمز الدولة</label>
+                        <select name="country_code" id="country_code" required class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>رقم الهاتف</label>
+                        {{ profile_form.phone }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- بطاقة الأمان -->
+            <div class="form-card full-width">
+                <div class="card-header">
+                    <h3>🔐 الأمان وكلمة المرور</h3>
+                </div>
+                <div class="card-body">
+                    <div class="security-header">
+                        <p class="security-desc">لحماية حسابك، استخدم كلمة مرور قوية.</p>
+                        <button type="button" class="btn-toggle-password" onclick="togglePasswordFields()">🔑 تغيير كلمة
+                            المرور</button>
+                    </div>
+
+                    <!-- Inline Password Fields (Hidden by default) -->
+                    <div id="passwordFields"
+                        style="display: none; margin-top: 20px; border-top: 1px solid #f1f5f9; padding-top: 20px;">
+                        <div class="form-group">
+                            <label>كلمة المرور الحالية</label>
+                            {{ password_form.current_password }}
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-half">
+                                <label>كلمة المرور الجديدة</label>
+                                {{ password_form.new_password }}
+                            </div>
+                            <div class="form-group col-half">
+                                <label>تأكيد كلمة المرور</label>
+                                {{ password_form.confirm_password }}
+                            </div>
+                        </div>
+                        <small class="hint">* 8 أحرف على الأقل، حرف كبير، حرف صغير، ورقم.</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">💾 حفظ التعديلات</button>
+        </div>
+    </form>
+</div>
+
+<!-- JS Dropdowns & Logic -->
+<script>
+    const countriesURL = "{% static 'js/countries.json' %}";
+    const phoneCodesURL = "{% static 'js/countryPhoneCodes.json' %}";
+    let countriesData = {};
+
+    fetch(countriesURL).then(res => res.json()).then(data => {
+        countriesData = data;
+        const countrySelect = document.getElementById("country");
+        countrySelect.innerHTML = '<option value="">اختر الدولة</option>';
+
+        const savedCountry = "{{ profile.country|default_if_none:'' }}";
+        const savedCity = "{{ profile.city|default_if_none:'' }}";
+
+        Object.keys(data).forEach(c => {
+            const selected = (savedCountry === c) ? 'selected' : '';
+            countrySelect.innerHTML += `<option value="${c}" ${selected}>${c}</option>`;
+        });
+
+        if (savedCountry && countriesData[savedCountry]) {
+            const citySelect = document.getElementById("city");
+            citySelect.innerHTML = '<option value="">اختر المدينة</option>';
+            countriesData[savedCountry].forEach(ct => {
+                const sel = (savedCity === ct) ? 'selected' : '';
+                citySelect.innerHTML += `<option value="${ct}" ${sel}>${ct}</option>`;
+            });
+        }
+    }).catch(err => console.error("Error loading countries:", err));
+
+    document.getElementById("country").addEventListener("change", function () {
+        const city = document.getElementById("city");
+        city.innerHTML = '<option value="">اختر المدينة</option>';
+        if (!countriesData[this.value]) return;
+        countriesData[this.value].forEach(ct => {
+            city.innerHTML += `<option value="${ct}">${ct}</option>`;
+        });
+    });
+
+    fetch(phoneCodesURL).then(res => res.json()).then(data => {
+        const codeSelect = document.getElementById("country_code");
+        codeSelect.innerHTML = '<option value="">رمز الدولة</option>';
+        const savedCode = "{{ profile.country_code|default_if_none:'' }}";
+        data.forEach(c => {
+            const sel = (savedCode == c.code) ? 'selected' : '';
+            codeSelect.innerHTML += `<option value="${c.code}" ${sel}>${c.country} +${c.code}</option>`;
+        });
+    }).catch(err => console.error("Error loading codes:", err));
+
+    function togglePasswordFields() {
+        var fields = document.getElementById("passwordFields");
+        if (fields.style.display === "none") {
+            fields.style.display = "block";
+        } else {
+            fields.style.display = "none";
+        }
+    }
+</script>
+
+<style>
+    /* Container & Header */
+    .profile-container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .page-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #f0f0f0;
+        padding-bottom: 15px;
+    }
+
+    .page-header h1 {
+        color: #2c3e50;
+        font-size: 2em;
+        margin-bottom: 5px;
+    }
+
+    .page-header p {
+        color: #7f8c8d;
+    }
+
+    /* Messages */
+    .msg-container {
+        margin-bottom: 25px;
+    }
+
+    .msg {
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        font-weight: 500;
+        text-align: center;
+    }
+
+    .msg.success {
+        background: #dcfce7;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+    }
+
+    .msg.error {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+    }
+
+    /* Form Grid */
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 25px;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+    }
+
+    .form-card.full-width {
+        grid-column: 1 / -1;
+    }
+
+    .card-header {
+        background: #f8fafc;
+        padding: 15px 20px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .card-header h3 {
+        margin: 0;
+        color: #334155;
+        font-size: 1.1rem;
+    }
+
+    .card-body {
+        padding: 25px;
+    }
+
+    /* Inputs */
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #475569;
+        font-weight: 500;
+        font-size: 0.95em;
+    }
+
+    .form-control,
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+        width: 100%;
+        padding: 10px 15px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        transition: all 0.2s;
+        font-size: 1em;
+    }
+
+    .form-control:focus,
+    input:focus,
+    select:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        outline: none;
+    }
+
+    input[readonly] {
+        background-color: #f1f5f9;
+        color: #64748b;
+        cursor: not-allowed;
+    }
+
+    .row {
+        display: flex;
+        gap: 20px;
+    }
+
+    .col-half {
+        flex: 1;
+    }
+
+    /* Security Section */
+    .security-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .security-desc {
+        color: #64748b;
+        margin: 0;
+    }
+
+    .btn-toggle-password {
+        background: #f59e0b;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.9em;
+        transition: 0.2s;
+    }
+
+    .btn-toggle-password:hover {
+        background: #d97706;
+    }
+
+    .hint {
+        display: block;
+        margin-top: 8px;
+        color: #94a3b8;
+        font-size: 0.85em;
+    }
+
+    /* Actions */
+    .form-actions {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .btn-save {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 12px 50px;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn-save:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,292 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block title %}لوحة التحكم{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="page-header">
+        <h1>📊 لوحة القيادة</h1>
+        <p>نظرة عامة على أداء النظام والإحصائيات الحالية.</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card users">
+            <div class="icon">👥</div>
+            <div class="info">
+                <h3>المستخدمين</h3>
+                <p class="number">{{ total_users }}</p>
+            </div>
+        </div>
+        <div class="stat-card apps">
+            <div class="icon">📱</div>
+            <div class="info">
+                <h3>التطبيقات</h3>
+                <p class="number">{{ total_apps }}</p>
+            </div>
+        </div>
+        <div class="stat-card downloads">
+            <div class="icon">📥</div>
+            <div class="info">
+                <h3>التنزيلات</h3>
+                <p class="number">{{ total_downloads }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-charts-row">
+        <!-- Chart Section -->
+        <div class="chart-container">
+            <h3>📈 أكثر التطبيقات تحميلاً</h3>
+            <canvas id="downloadsChart"></canvas>
+        </div>
+
+        <!-- Recent Users -->
+        <div class="recent-container">
+            <h3>🆕 آخر المستخدمين المنضمين</h3>
+            <ul class="recent-list">
+                {% for user in recent_users %}
+                <li>
+                    <span class="user-icon">👤</span>
+                    <div class="user-info">
+                        <strong>{{ user.username }}</strong>
+                        <small>{{ user.email }}</small>
+                    </div>
+                </li>
+                {% empty %}
+                <li class="empty">لا يوجد مستخدمين جدد</li>
+                {% endfor %}
+            </ul>
+
+            <h3 style="margin-top: 30px;">📥 آخر التنزيلات</h3>
+            <ul class="recent-list">
+                {% for download in recent_downloads %}
+                <li>
+                    <span class="user-icon" style="background: #ecfdf5; color: #10b981;">⬇️</span>
+                    <div class="user-info">
+                        <strong>
+                            {% if download.app %}
+                            {{ download.app.title }}
+                            {% elif download.main_app %}
+                            {{ download.main_app.title }}
+                            {% else %}
+                            غير معروف
+                            {% endif %}
+                        </strong>
+                        <small>بواسطة {{ download.user.username }}</small>
+                    </div>
+                </li>
+                {% empty %}
+                <li class="empty">لا يوجد تنزيلات حديثة</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const ctx = document.getElementById('downloadsChart').getContext('2d');
+        const appLabels = JSON.parse('{{ app_labels|escapejs }}');
+        const appData = JSON.parse('{{ app_data|escapejs }}');
+
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: appLabels,
+                datasets: [{
+                    label: 'عدد التحميلات',
+                    data: appData,
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                        'rgba(255, 99, 132, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 99, 132, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<style>
+    .dashboard-container {
+        padding: 20px;
+    }
+
+    .page-header {
+        margin-bottom: 30px;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 15px;
+    }
+
+    .page-header h1 {
+        color: #1e293b;
+        font-size: 2rem;
+        margin-bottom: 5px;
+    }
+
+    .page-header p {
+        color: #64748b;
+    }
+
+    /* Stats Grid */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+        color: white;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .stat-card.users {
+        background: linear-gradient(135deg, #3b82f6, #2563eb);
+    }
+
+    .stat-card.apps {
+        background: linear-gradient(135deg, #10b981, #059669);
+    }
+
+    .stat-card.downloads {
+        background: linear-gradient(135deg, #f59e0b, #d97706);
+    }
+
+    .stat-card .icon {
+        font-size: 3rem;
+        margin-left: 20px;
+        opacity: 0.8;
+    }
+
+    .stat-card .info h3 {
+        margin: 0;
+        font-size: 1.1rem;
+        opacity: 0.9;
+        font-weight: normal;
+    }
+
+    .stat-card .number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin: 5px 0 0;
+        line-height: 1;
+    }
+
+    /* Charts Row */
+    .dashboard-charts-row {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 25px;
+    }
+
+    @media (max-width: 900px) {
+        .dashboard-charts-row {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    .chart-container,
+    .recent-container {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        border: 1px solid #e2e8f0;
+    }
+
+    .chart-container h3,
+    .recent-container h3 {
+        margin-top: 0;
+        color: #334155;
+        border-bottom: 1px solid #f1f5f9;
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+        font-size: 1.2rem;
+    }
+
+    /* Recent Users List */
+    .recent-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .recent-list li {
+        display: flex;
+        align-items: center;
+        padding: 10px 0;
+        border-bottom: 1px solid #f1f5f9;
+    }
+
+    .recent-list li:last-child {
+        border-bottom: none;
+    }
+
+    .recent-list .user-icon {
+        background: #eff6ff;
+        color: #3b82f6;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-left: 15px;
+        font-size: 1.2rem;
+    }
+
+    .recent-list .user-info {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .recent-list .user-info strong {
+        color: #1e293b;
+        font-size: 0.95rem;
+    }
+
+    .recent-list .user-info small {
+        color: #64748b;
+        font-size: 0.85rem;
+    }
+
+    .recent-list .empty {
+        color: #94a3b8;
+        font-style: italic;
+        text-align: center;
+        padding: 20px;
+    }
+</style>
+{% endblock %}

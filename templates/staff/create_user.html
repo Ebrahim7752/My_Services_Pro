@@ -1,0 +1,314 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block title %}إنشاء مستخدم{% endblock %}
+
+{% block content %}
+<div class="admin-form-container">
+    <div class="form-header">
+        <h3>➕ إنشاء مستخدم جديد</h3>
+        <a href="{% url 'staff_users' %}" class="btn-back">⬅️ عودة للقائمة</a>
+    </div>
+
+    {% if messages %}
+    <div class="msg-container">
+        {% for message in messages %}
+        <div class="msg {{ message.tags }}">{{ message }}</div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="POST" class="admin-form">
+        {% csrf_token %}
+
+        <div class="form-grid">
+            <!-- معلومات الحساب -->
+            <div class="form-card">
+                <div class="card-header">
+                    <h4>👤 بيانات الحساب</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label>اسم المستخدم</label>
+                        {{ user_form.username }}
+                    </div>
+                    <div class="form-group">
+                        <label>البريد الإلكتروني</label>
+                        {{ user_form.email }}
+                    </div>
+                    <div class="form-group">
+                        <label>كلمة المرور</label>
+                        {{ user_form.password }}
+                        <small class="hint">* 8 أحرف على الأقل، حرف كبير، حرف صغير، ورقم.</small>
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label>نشط؟</label>
+                        {{ user_form.is_active }}
+                    </div>
+                    <div class="form-group checkbox-group">
+                        <label>مدير (Staff)؟</label>
+                        {{ user_form.is_staff }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- معلومات الملف الشخصي -->
+            <div class="form-card">
+                <div class="card-header">
+                    <h4>📝 الملف الشخصي</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="form-group col-half">
+                            <label>الاسم الأول</label>
+                            {{ profile_form.first_name }}
+                        </div>
+                        <div class="form-group col-half">
+                            <label>الاسم الأخير</label>
+                            {{ profile_form.last_name }}
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>الدولة</label>
+                        <select name="country" id="country" required class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>المدينة</label>
+                        <select name="city" id="city" required class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>رمز الدولة</label>
+                        <select name="country_code" id="country_code" required class="form-control"></select>
+                    </div>
+                    <div class="form-group">
+                        <label>رقم الهاتف</label>
+                        {{ profile_form.phone }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-submit">✅ إنشاء المستخدم</button>
+        </div>
+    </form>
+</div>
+
+<!-- Styles -->
+<style>
+    .admin-form-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .form-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        border-bottom: 2px solid #e2e8f0;
+        padding-bottom: 15px;
+    }
+
+    .form-header h3 {
+        margin: 0;
+        color: #1e293b;
+        font-size: 1.5rem;
+    }
+
+    .btn-back {
+        background: #64748b;
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: 0.2s;
+    }
+
+    .btn-back:hover {
+        background: #475569;
+    }
+
+    .msg-container {
+        margin-bottom: 20px;
+    }
+
+    .msg {
+        padding: 12px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+        font-weight: 500;
+    }
+
+    .msg.success {
+        background: #dcfce7;
+        color: #166534;
+        border: 1px solid #bbf7d0;
+    }
+
+    .msg.error {
+        background: #fee2e2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+    }
+
+    .form-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        gap: 25px;
+    }
+
+    .form-card {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        border: 1px solid #e2e8f0;
+    }
+
+    .card-header {
+        background: #f8fafc;
+        padding: 15px 20px;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .card-header h4 {
+        margin: 0;
+        color: #334155;
+        font-size: 1.1rem;
+    }
+
+    .card-body {
+        padding: 20px;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 6px;
+        color: #475569;
+        font-weight: 500;
+    }
+
+    .form-control,
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #cbd5e1;
+        border-radius: 6px;
+        transition: border 0.2s;
+    }
+
+    .form-control:focus,
+    input:focus,
+    select:focus {
+        border-color: #3b82f6;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+
+    .row {
+        display: flex;
+        gap: 15px;
+    }
+
+    .col-half {
+        flex: 1;
+    }
+
+    .hint {
+        display: block;
+        margin-top: 5px;
+        color: #64748b;
+        font-size: 0.85em;
+    }
+
+    .checkbox-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .checkbox-group label {
+        margin: 0;
+    }
+
+    .checkbox-group input {
+        width: auto;
+    }
+
+    .form-actions {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .btn-submit {
+        background: #2563eb;
+        color: white;
+        border: none;
+        padding: 12px 40px;
+        border-radius: 8px;
+        font-size: 1.1em;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+        box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+    }
+
+    .btn-submit:hover {
+        background: #1d4ed8;
+        transform: translateY(-1px);
+    }
+</style>
+
+<!-- Scripts -->
+<script>
+    const countriesURL = "{% static 'js/countries.json' %}";
+    const phoneCodesURL = "{% static 'js/countryPhoneCodes.json' %}";
+    let countriesData = {};
+
+    fetch(countriesURL).then(res => res.json()).then(data => {
+        countriesData = data;
+        const country = document.getElementById("country");
+        country.innerHTML = '<option value="">اختر الدولة</option>';
+        Object.keys(data).forEach(c => {
+            const selected = "{{ profile_form.country.value|default:'' }}" === c ? 'selected' : '';
+            country.innerHTML += `<option value="${c}" ${selected}>${c}</option>`;
+        });
+        const initialCountry = "{{ profile_form.country.value|default:'' }}";
+        if (initialCountry && countriesData[initialCountry]) {
+            const city = document.getElementById("city");
+            city.innerHTML = '<option value="">اختر المدينة</option>';
+            countriesData[initialCountry].forEach(ct => {
+                const sel = "{{ profile_form.city.value|default:'' }}" === ct ? 'selected' : '';
+                city.innerHTML += `<option value="${ct}" ${sel}>${ct}</option>`;
+            });
+        }
+    });
+
+    document.getElementById("country").addEventListener("change", function () {
+        const city = document.getElementById("city");
+        city.innerHTML = '<option value="">اختر المدينة</option>';
+        if (!countriesData[this.value]) return;
+        countriesData[this.value].forEach(ct => {
+            city.innerHTML += `<option value="${ct}">${ct}</option>`;
+        });
+    });
+
+    fetch(phoneCodesURL).then(res => res.json()).then(data => {
+        const code = document.getElementById("country_code");
+        code.innerHTML = '<option value="">رمز الدولة</option>';
+        data.forEach(c => {
+            const selected = "{{ profile_form.country_code.value|default:'' }}" == c.code ? 'selected' : '';
+            code.innerHTML += `<option value="${c.code}" ${selected}>${c.country} +${c.code}</option>`;
+        });
+    });
+</script>
+{% endblock %}

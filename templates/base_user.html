@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}لوحة المستخدم{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/user_style.css' %}">
+</head>
+<body>
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="navbar-brand">MyServicesPro</div>
+        <div class="navbar-menu">
+            <span class="user-welcome">مرحبًا، {{ user.username }}</span>
+            <a href="{% url 'logout' %}" class="btn btn-logout">تسجيل خروج</a>
+        </div>
+    </header>
+
+    <!-- Main container -->
+    <div class="main-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav class="sidebar-nav">
+                <a href="{% url 'user_dashboard' %}" class="nav-item {% if request.path == '/user/dashboard/' %}active{% endif %}">
+                    🏠 الرئيسية
+                
+                <a href="{% url 'profile_view' %}" class="nav-item {% if request.path == '/user/profile/' %}active{% endif %}">
+                    👤 ملفي الشخصي
+                </a>
+<a href="{% url 'user_downloads' %}" class="nav-item {% if request.path == '/user/downloads/' %}active{% endif %}">
+    📥 تحميلاتي
+</a>
+
+            </nav>
+        </aside>
+
+        <!-- Content -->
+        <main class="content">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+
+    <!-- Optional JS for animations -->
+    <script>
+        // Animate cards on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                card.classList.add('animate__fadeInUp');
+            });
+        });
+    </script>
+</body>
+</html>

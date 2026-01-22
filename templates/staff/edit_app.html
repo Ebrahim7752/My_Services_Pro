@@ -1,0 +1,57 @@
+{% extends 'base_admin.html' %}
+{% load static %}
+{% block title %}تعديل التطبيق{% endblock %}
+
+{% block content %}
+<div class="create-app-page">
+
+    <h3>📱 تعديل التطبيق</h3>
+
+    <!-- رسائل الخطأ -->
+    {% if messages %}
+    <div id="messages-container">
+        {% for message in messages %}
+            {% if "error" in message.tags %}
+            <div class="alert error">{{ message }}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="card">
+            <label>عنوان التطبيق</label>
+            <input type="text" name="title" value="{{ form.title.value|default_if_none:'' }}" required>
+
+            <label>الوصف</label>
+            <textarea name="description" rows="4" required>{{ form.description.value|default_if_none:'' }}</textarea>
+
+            <label>الأيقونة (اختياري)</label>
+            <input type="file" name="icon">
+            {% if form.instance.icon %}
+                <img src="{{ form.instance.icon.url }}" alt="icon" class="preview-icon" width="60">
+            {% endif %}
+
+            <label>ملف APK (اختياري)</label>
+            <input type="file" name="apk_file">
+            {% if form.instance.apk_file %}
+                <a href="{{ form.instance.apk_file.url }}" target="_blank">عرض الملف الحالي</a>
+            {% endif %}
+
+            <label>الحالة</label>
+            <select name="is_active">
+                <option value="True" {% if form.is_active.value %}selected{% endif %}>نشط</option>
+                <option value="False" {% if not form.is_active.value %}selected{% endif %}>غير نشط</option>
+            </select>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn-save">💾 تحديث التطبيق</button>
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}
