@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-q^^1fk%(5m!omuuzkpytjv6j-hhcib4x#1lu(u%ni7w_^j+y2j
 # Set to True for local development so Django serves static/media files.
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"] 
+ALLOWED_HOSTS = ["https://myservicespro.onrender.com/"] 
 
 # Security Enhancements
 SECURE_BROWSER_XSS_FILTER = True
@@ -148,3 +148,4 @@ LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 
 LOGOUT_REDIRECT_URL = '/login/'
+
