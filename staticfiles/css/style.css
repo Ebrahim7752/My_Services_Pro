@@ -1,0 +1,969 @@
+/*------------------------------------------------------------------
+
+    Main Style Stylesheet
+    Project:        BEAM. |  
+    Version:        1.0
+    Author:         Bakhtrai Badr
+    Last change:    9/12/2018
+    Primary use:    App And Software Showcase 
+
+-------------------------------------------------------------------*/
+
+/*=======================================================
+
+			TABLE OF CONTENT:
+
+   1*)Body Style
+   2*)Typography
+   3*)Buttons
+   4*)Navbar
+   5*)Banner
+   6*)About
+   7*)Services
+   8*)Features
+   9*)Prices
+   10*)Testimonials
+   11*)Video PopUp
+   12*)App Screenshots
+   13*)Team
+   14*)Brands
+   15*)Contact
+   16*)Media Queries:
+
+========================================================*/
+
+@import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700");
+
+/*=======================================================
+			BODY:
+========================================================*/
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.8;
+    letter-spacing: 0.05em;
+    color: #686b75;
+}
+
+/*=======================================================
+			COLORS(Only Visible In Scss File):
+========================================================*/
+
+/*=======================================================
+			TYPOGRAPHY:
+========================================================*/
+
+h1 {
+    font-size: 55px;
+    font-weight: bold;
+    line-height: 1.3em;
+    color: #fff;
+}
+
+h2 {
+    font-size: 36px;
+    font-weight: bold;
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.section-title {
+    margin: 0;
+}
+
+.section-title:after {
+    content: "";
+    position: relative;
+    left: 50%;
+    bottom: 0;
+    width: 60px;
+    height: 4px;
+    display: block;
+    background-color: #fd8917;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    border-radius: 5px;
+    margin: 30px 0;
+}
+
+.sub {
+    color: #fff;
+    font-size: 18px;
+    line-height: 1.7em;
+    font-weight: 500;
+}
+
+/*=======================================================
+			BUTTONS:
+========================================================*/
+
+.btn-primary {
+    background: #0c191b;
+    padding: 15px 20px;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active {
+    background: #138701;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    transition: all .2s ease-in-out;
+}
+
+.btn-secondary {
+    background: #040026;
+    padding: 15px 20px;
+    font-weight: bold;
+    border: none;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus,
+.btn-secondary:active {
+    background: #17ff23;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    transition: all .2s ease-in-out;
+}
+
+.btn-transparent {
+    background: transparent;
+    padding: 15px 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 2px solid #9dbcfd;
+}
+
+.btn-transparent:hover,
+.btn-transparent:focus,
+.btn-transparent:active {
+    background: #138701;
+    color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+    transition: all .2s ease-in-out;
+}
+
+/*=======================================================
+			NAVBAR
+========================================================*/
+
+.navbar {
+    transition: all .2s ease-in-out;
+}
+
+.navbar .navbar-brand {
+    font-weight: bold;
+    letter-spacing: 0.3em;
+    color: #ffffff;
+}
+
+.navbar .navbar-brand span {
+    color: #17ff23;
+}
+
+.navbar .navbar-collapse {
+    padding: 30px 0 0 0;
+}
+
+.navbar .navbar-nav .nav-link {
+    color: #ffffff;
+    padding: 0 0.8rem;
+    transition: all .2s ease-in-out;
+}
+
+.navbar .navbar-nav .nav-link:hover {
+    color: #17ff23;
+}
+
+.navbar .navbar-nav .nav-link.active {
+    color: #17ff23;
+    font-weight: 700;
+}
+
+.navbar .navbar-nav .active > .nav-link {
+    color: #17ff23;
+}
+
+.navbar .navbar-nav .btn {
+    position: relative;
+    top: -15px;
+    margin-left: 15px;
+}
+
+.navbar .navbar-toggler {
+    border: none;
+}
+
+.navbar .navbar-toggler i {
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+.navbar .navbar-toggler:focus,
+.navbar .navbar-toggler:hover {
+    border: none;
+    outline: 0;
+}
+
+.navbar-light {
+    background: #338ecf;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transition: all .2s ease-in-out;
+}
+
+.navbar-light .navbar-brand {
+    color: #fff;
+    transition: all .2s ease-in-out;
+}
+
+.navbar-light .navbar-collapse {
+    padding: 25px 0 0 0;
+}
+
+.navbar-light .navbar-brand:hover {
+    color: #17ff23;
+}
+
+.navbar-light .navbar-nav .nav-link {
+    color: #fff;
+}
+
+.navbar-light .navbar-nav .nav-link.active {
+    color: #17ff23;
+}
+
+.navbar-light .navbar-toggler {
+    border: none;
+}
+
+.navbar-light .navbar-toggler i {
+    font-size: 2.5rem;
+    color: #fff;
+}
+
+.navbar-light .navbar-toggler:focus,
+.navbar-light .navbar-toggler:hover {
+    border: none;
+    outline: 0;
+}
+
+/*=======================================================
+			BANNER:
+========================================================*/
+
+.banner {
+    background: url(../imgs/header2.png);
+    background-size: cover;
+    background-position: top center;
+    text-align: center;
+}
+
+.banner .container .caption {
+    padding-top: 180px;
+}
+
+.banner .container .caption h1 {
+    margin-bottom: 20px;
+}
+
+.banner .container .caption p {
+    margin-bottom: 20px;
+}
+
+.banner .container .caption .btn {
+    margin-bottom: 40px;
+}
+
+.banner .container .caption img {
+    width: 800px;
+}
+
+/*=======================================================
+			ABOUT:
+========================================================*/
+
+#about {
+    padding: 120px 0;
+    text-align: center;
+}
+
+/*=======================================================
+			SERVICES:
+========================================================*/
+
+#services {
+    padding: 120px 0;
+}
+
+#services p {
+    margin: 25px 0;
+}
+
+#services ul li span {
+    position: relative;
+    bottom: 15px;
+}
+
+#services .img-table {
+    position: relative;
+    top: 30px;
+}
+
+#services .caption {
+    position: relative;
+    top: 30px;
+}
+
+#services .seconde {
+    padding: 80px 0;
+}
+
+/*=======================================================
+			FEATURES:
+========================================================*/
+
+#features {
+    padding: 120px 0;
+    text-align: center;
+}
+
+#features .feature {
+    margin: 30px 0;
+    padding: 0 20px;
+    transition: all .2s ease-in-out;
+}
+
+#features .feature .feature-icon {
+    background: url(../imgs/icons-bg.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 125px;
+    height: 125px;
+}
+
+#features .feature .feature-icon svg {
+    position: relative;
+    top: 40px;
+}
+
+#features .feature h4 {
+    margin: 25px 0;
+}
+
+#features .feature:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+
+/*=======================================================
+			PRICES:
+========================================================*/
+
+#prices {
+    padding: 120px 0;
+    background: url(../imgs/pricing-bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+}
+
+#prices .price-table {
+    background: #fff;
+    color: #686b75;
+    transition: all .2s ease-in-out;
+    padding: 60px 30px;
+    border-radius: 5px;
+    margin: 30px 0;
+}
+
+#prices .price-table .header {
+    margin-bottom: 30px;
+}
+
+#prices .price-table .header .title {
+    color: #068BEA;
+    font-weight: 500;
+}
+
+#prices .price-table .header .price {
+    font-size: 60px;
+    color: #000;
+    font-weight: 700;
+}
+
+#prices .price-table .header h4 {
+    font-weight: 700;
+}
+
+#prices .price-table ul {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+#prices .price-table .btn {
+    margin-top: 30px;
+}
+
+#prices .price-table:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+
+/*=======================================================
+			TESTIMONIALS:
+========================================================*/
+
+#testimonials {
+    padding: 0 0 120px 0;
+    text-align: center;
+}
+
+#testimonials .carousel-container {
+    margin: 0 auto;
+}
+
+#testimonials .carousel-container .testi-icon {
+    background: url(../imgs/icons-bg.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: inline-block;
+    width: 90px;
+    height: 90px;
+}
+
+#testimonials .carousel-container .testi-icon svg {
+    position: relative;
+    top: 20px;
+}
+
+#testimonials .carousel-container .quote {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 40px 0;
+}
+
+#testimonials .carousel-container img {
+    width: 60px;
+}
+
+#testimonials .carousel-container .item {
+    padding: 0 10px;
+}
+
+#testimonials .carousel-container .owl-theme .owl-controls .owl-page span {
+    display: block;
+    width: 12px;
+    height: 12px;
+    margin: 5px 7px;
+    filter: Alpha(Opacity=50);
+    opacity: 0.5;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    border: 2px solid #068BEA;
+    background: transparent;
+}
+
+#testimonials .carousel-container .owl-theme .owl-controls .owl-page.active span,
+#testimonials .carousel-container .owl-theme .owl-controls.clickable .owl-page:hover span {
+    background: #068BEA;
+}
+
+/*=======================================================
+			VIDEO POP UP:
+========================================================*/
+
+#video-popup {
+    padding: 100px 0;
+}
+
+#video-popup .video-box {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#video-popup .video-box .play-button a {
+    background: #fff;
+    position: absolute;
+    left: calc(50% - 40px);
+    top: calc(50% - 40px);
+    width: 80px;
+    height: 80px;
+    line-height: 6.8;
+    border-radius: 100%;
+    transition: all .2s ease-in-out;
+    z-index: 2;
+}
+
+#video-popup .video-box .play-button a i {
+    color: #fd8917;
+    font-size: 40px;
+}
+
+#video-popup .video-box .play-button a:hover {
+    background: #fd8917;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+
+#video-popup .video-box .play-button a:hover i {
+    color: #fff;
+}
+
+#video-popup .video-box .waves-block {
+    position: absolute;
+    width: 384px;
+    width: 24rem;
+    height: 384px;
+    height: 24rem;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+#video-popup .video-box .waves-block .waves {
+    position: absolute;
+    width: 384px;
+    width: 24rem;
+    height: 384px;
+    height: 24rem;
+    background: rgba(255, 255, 255, 0.4);
+    opacity: 0;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    border-radius: 320px;
+    background-clip: padding-box;
+    -webkit-animation: waves 3s ease-in-out infinite;
+    animation: waves 3s ease-in-out infinite;
+}
+
+#video-popup .video-box .waves-block .wave-1 {
+    -webkit-animation-delay: 0s;
+    animation-delay: 0s;
+}
+
+#video-popup .video-box .waves-block .wave-2 {
+    -webkit-animation-delay: 1s;
+    animation-delay: 1s;
+}
+
+#video-popup .video-box .waves-block .wave-3 {
+    -webkit-animation-delay: 2s;
+    animation-delay: 2s;
+}
+
+@keyframes waves {
+    0% {
+        -webkit-transform: scale(0.2, 0.2);
+        transform: scale(0.2, 0.2);
+        opacity: 0;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+    50% {
+        opacity: 0.9;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+    }
+    100% {
+        -webkit-transform: scale(0.9, 0.9);
+        transform: scale(0.9, 0.9);
+        opacity: 0;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    }
+}
+
+/*=======================================================
+			APP SCREENSHOTS:
+========================================================*/
+
+#screenshots {
+    padding: 100px 0;
+    text-align: center;
+}
+
+#screenshots .title-container {
+    margin: 0 auto;
+}
+
+#screenshots .item {
+    margin: 40px 20px;
+}
+
+#screenshots .item img {
+    box-shadow: 0 3px 15px rgba(76, 76, 77, 0.15);
+}
+
+#screenshots .owl-theme .owl-controls .owl-page span {
+    display: block;
+    width: 12px;
+    height: 12px;
+    margin: 5px 7px;
+    filter: Alpha(Opacity=50);
+    opacity: 0.5;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    border: 2px solid #068BEA;
+    background: transparent;
+}
+
+#screenshots .owl-theme .owl-controls .owl-page.active span,
+#screenshots .owl-theme .owl-controls.clickable .owl-page:hover span {
+    background: #068BEA;
+}
+
+/*=======================================================
+			TEAM:
+========================================================*/
+
+#team {
+    padding: 120px 0;
+    text-align: center;
+}
+
+#team .title-container {
+    margin: 40px auto;
+}
+
+#team .member img {
+    width: 250px;
+    margin: 0 auto;
+}
+
+#team .member h4 {
+    margin-top: 15px;
+}
+
+#team .member h4:after {
+    content: "";
+    position: relative;
+    left: 50%;
+    bottom: 0;
+    width: 60px;
+    height: 2px;
+    display: block;
+    background-color: #068BEA;
+    -webkit-transform: translateX(-50%);
+    transform: translateX(-50%);
+    border-radius: 5px;
+    margin: 15px 0;
+}
+
+#team .member .social-media {
+    list-style: none;
+    margin: 0 auto;
+    padding: 0;
+}
+
+#team .member .social-media li {
+    display: inline-block;
+    background: #068BEA;
+    transition: all .2s ease-in-out;
+    border-radius: 100%;
+    line-height: 2.5;
+    margin: 0 8px 8px 0;
+    width: 40px;
+    height: 40px;
+}
+
+#team .member .social-media li a {
+    color: #fff;
+}
+
+#team .member .social-media li:hover {
+    cursor: pointer;
+    background: #fd8917;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+
+/*=======================================================
+			BRANDS:
+========================================================*/
+
+#brands {
+    padding: 120px 0;
+    text-align: center;
+}
+
+#brands .title-container {
+    margin: 0 auto;
+}
+
+#brands .item {
+    margin: 25px 0;
+}
+
+#brands .owl-theme .owl-controls .owl-page span {
+    display: block;
+    width: 12px;
+    height: 12px;
+    margin: 5px 7px;
+    filter: Alpha(Opacity=50);
+    opacity: 0.5;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    border: 2px solid #068BEA;
+    background: transparent;
+}
+
+#brands .owl-theme .owl-controls .owl-page.active span,
+#brands .owl-theme .owl-controls.clickable .owl-page:hover span {
+    background: #068BEA;
+}
+
+/*=======================================================
+			CONTACT:
+========================================================*/
+
+#contact {
+    background: url(../imgs/footer.png);
+    background-size: cover;
+    background-position: top center;
+    padding: 120px 0 40px 0;
+    color: #fff;
+}
+
+#contact .title-container {
+    margin: 0 auto;
+}
+
+#contact form {
+    margin: 40px 0;
+}
+
+#contact form .form-group label {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+#contact form .form-group .form-control {
+    padding: 13px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border-radius: 2px;
+    border: 1px solid #DDE4F4;
+    outline: none;
+}
+
+#contact form .btn {
+    margin: 1rem 0;
+}
+
+#contact p {
+    text-align: center;
+}
+
+/*=======================================================
+			MEDIA QUERIES:
+========================================================*/
+
+@media (max-width: 992px) {
+    .banner .container .row .caption h1 {
+        font-size: 48px;
+    }
+
+    section .container .row h2 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 991px) {
+    #home .navbar {
+        background: #068BEA;
+    }
+    #home .navbar .navbar-collapse .navbar-nav .btn {
+        position: static;
+        margin: 10px 0 0 0;
+    }
+}
+
+@media (max-width: 767px) {
+    #home .banner .caption h1 {
+        font-size: 34px;
+    }
+}
+
+@media (max-width: 400px) {
+    #video-popup .video-box .waves-block {
+        display: none;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*-----------------------------
+   App Cards - التطبيقات العامة
+-----------------------------*/
+.app-card {
+    width: 100px;
+    min-height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(145deg, #ffffff, #f9f9f9);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transition: transform .35s ease, box-shadow .35s ease;
+    margin: 40px;               /* مسافة أكبر بين الكروت */
+    border-radius: 16px;
+    padding: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* تأثير عند المرور */
+.app-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 18px 35px rgba(0,0,0,0.18);
+}
+
+/* صورة التطبيق */
+.app-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    margin-bottom: 14px;
+    border-radius: 50%;
+    border: 3px solid #068BEA;
+    transition: transform .3s ease;
+}
+
+.app-card:hover img {
+    transform: rotate(5deg) scale(1.1);
+}
+
+/* عنوان التطبيق */
+.app-title {
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #068BEA;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+}
+
+/* وصف التطبيق */
+.app-description {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    margin-bottom: 60px; /* مساحة للزر */
+}
+
+/* زر التحميل */
+.app-card .btn {
+    position: absolute;
+    bottom: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 85%;
+    padding: 12px 0;
+    font-weight: bold;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #068BEA, #0aa2f0);
+    color: #fff;
+    transition: all .35s ease;
+    cursor: pointer;
+}
+
+/* أنيميشن عند المرور */
+.app-card .btn:hover {
+    background: linear-gradient(135deg, #fd8917, #ff9f3c);
+    transform: translateX(-50%) translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+/*-----------------------------
+   Other Apps - قسم المطورين
+-----------------------------*/
+#other-apps .app-card {
+    width: 300px;
+    min-height: 400px;
+    background: #fff;
+    padding: 28px;
+    border-radius: 16px;
+    box-shadow: 0 8px 22px rgba(0,0,0,.12);
+    text-align: center;
+    margin: 20px auto;
+    transition: transform .35s ease, box-shadow .35s ease;
+}
+
+#other-apps .app-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 28px rgba(0,0,0,.18);
+}
+
+#other-apps .app-card img {
+    width: 90px;
+    height: 90px;
+    object-fit: contain;
+    margin-bottom: 20px;
+    border-radius: 14px;
+    background: #f0f8ff;
+    padding: 10px;
+    transition: transform .3s ease;
+}
+
+#other-apps .app-card:hover img {
+    transform: scale(1.1);
+}
+
+#other-apps .app-title {
+    font-size: 21px;
+    font-weight: bold;
+    color: #068BEA;
+    margin-bottom: 12px;
+}
+
+#other-apps .app-description {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+/* توسيط العنصر داخل Owl */
+#other-apps .owl-item {
+    width: 380px !important;
+    display: flex;
+    justify-content: center;
+}
