@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-q^^1fk%(5m!omuuzkpytjv6j-hhcib4x#1lu(u%ni7w_^j+y2j
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # Set to True for local development so Django serves static/media files.
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["https://myservicespro.onrender.com/"] 
 
